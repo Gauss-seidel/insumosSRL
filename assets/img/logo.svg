@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60" role="img" aria-label="Insumos S.R.L.">
+  <rect width="160" height="60" rx="5" fill="#013C7E"/>
+  <rect y="50" width="160" height="10" rx="0 0 5 5" fill="#00265C"/>
+  <rect x="0" y="50" width="160" height="3" fill="#0E9F6E" opacity="0.85"/>
+  <text x="12" y="29" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="800" fill="#FFFFFF" letter-spacing="1.5">INSUMOS</text>
+  <text x="12" y="45" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#9DB8E0" letter-spacing="3">S.R.L.</text>
+</svg>
