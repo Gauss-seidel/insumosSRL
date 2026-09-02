@@ -1,0 +1,21 @@
+# Dependencias locales
+node_modules/
+
+# Render/Cloudflare
+.env
+
+# Base de datos local
+*.db
+*.sqlite
+
+# Builds
+dist/
+build/
+
+# Editor
+.vscode/
+.idea/
+
+# Sistema
+Thumbs.db
+.DS_Store
