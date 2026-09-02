@@ -558,6 +558,48 @@ address { font-style: normal; }
   gap: 1.5rem;
 }
 
+.paginador {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.pag-btn {
+  padding: 0.6rem 1.25rem;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--azul);
+  background: #ffffff;
+  border: 1.5px solid var(--azul);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.pag-btn:hover:not(:disabled),
+.pag-btn:focus-visible {
+  background: var(--azul);
+  color: #ffffff;
+  outline: none;
+}
+
+.pag-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pag-indicador {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--texto);
+  min-width: 6rem;
+  text-align: center;
+}
+
 /* Cards de producto — marcado generado por app.js (.producto-*) */
 .producto-card {
   display: flex;
@@ -1049,7 +1091,7 @@ address { font-style: normal; }
 }
 
 .footer-brand .logo img {
-  filter: brightness(0) invert(1);
+  border-radius: 8px;
   margin-bottom: 1rem;
 }
 

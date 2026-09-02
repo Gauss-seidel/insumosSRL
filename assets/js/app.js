@@ -118,6 +118,8 @@
     var tabs = $$(".tab-btn[data-categoria]", $("#catalogo-tabs"));
     var primera = (tabs.length && tabs[0].getAttribute("data-categoria")) || "bobinas";
     var ultimoTrigger = null;
+    var PAGINA_SIZE = 6;
+    var paginas = {};
 
     var renderGrid = function (categoria) {
       var items = CATALOGO.filter(function (p) { return p.categoria === categoria; });
@@ -125,7 +127,19 @@
         grid.innerHTML = '<p class="catalogo-vacio">No hay productos disponibles en esta categoría.</p>';
         return;
       }
-      grid.innerHTML = items.map(function (item) {
+      var totalPaginas = Math.ceil(items.length / PAGINA_SIZE);
+      var pagina = Math.min(paginas[categoria] || 0, totalPaginas - 1);
+      var visibles = items.slice(pagina * PAGINA_SIZE, (pagina + 1) * PAGINA_SIZE);
+      var paginador = totalPaginas > 1
+        ? '<nav class="paginador" aria-label="Paginador de ' + escapeHtml(categoria) + '">' +
+          '<button type="button" class="pag-btn" data-accion="prev" data-categoria="' + escapeHtml(categoria) + '"' +
+          (pagina === 0 ? " disabled" : "") + ' aria-label="Página anterior">← Anterior</button>' +
+          '<span class="pag-indicador">Página ' + (pagina + 1) + " de " + totalPaginas + "</span>" +
+          '<button type="button" class="pag-btn" data-accion="next" data-categoria="' + escapeHtml(categoria) + '"' +
+          (pagina >= totalPaginas - 1 ? " disabled" : "") + ' aria-label="Página siguiente">Siguiente →</button>' +
+          "</nav>"
+        : "";
+      grid.innerHTML = visibles.map(function (item) {
         var medidas = item.medidas ? '<p class="producto-medidas">' + escapeHtml(item.medidas) + "</p>" : "";
         var badge = item.certificadoDnit ? '<span class="badge-dnit">Certificado DNIT</span>' : "";
         return (
@@ -138,7 +152,7 @@
           '<button type="button" class="btn-ficha">Ver ficha técnica</button>' +
           "</div></article>"
         );
-      }).join("");
+      }).join("") + paginador;
     };
 
     var activarTab = function (tab) {
@@ -162,6 +176,20 @@
 
     /* Apertura del modal por click (botón o card) y por teclado */
     grid.addEventListener("click", function (e) {
+      var pagBtn = e.target.closest(".pag-btn");
+      if (pagBtn) {
+        var catPag = pagBtn.getAttribute("data-categoria");
+        var itemsPag = CATALOGO.filter(function (p) { return p.categoria === catPag; });
+        var totalPag = Math.ceil(itemsPag.length / PAGINA_SIZE);
+        var actualPag = Math.min(paginas[catPag] || 0, totalPag - 1);
+        var delta = pagBtn.getAttribute("data-accion") === "prev" ? -1 : 1;
+        var nuevaPag = Math.min(Math.max(actualPag + delta, 0), totalPag - 1);
+        if (nuevaPag !== actualPag) {
+          paginas[catPag] = nuevaPag;
+          renderGrid(catPag);
+        }
+        return;
+      }
       var card = e.target.closest(".producto-card");
       if (card) {
         ultimoTrigger = card;
